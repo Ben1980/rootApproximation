@@ -7,7 +7,7 @@
 
 class Secant : public Iteration {
 public:
-    explicit Secant(const std::function<double (double)> &f) : Iteration(9), mf(f) {}
+    explicit Secant(const std::function<double (double)> &f) : mf(f) {}
 
     double solve(double a, double b) override {
         mNumberOfSteps = 0;

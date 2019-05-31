@@ -5,7 +5,7 @@
 
 class Brent : public Iteration {
 public:
-    explicit Brent(const std::function<double (double)> &f) : Iteration(9), mf(f) {}
+    explicit Brent(const std::function<double (double)> &f) : mf(f) {}
 
     double solve(double a, double my, double b) override {
         return {};

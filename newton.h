@@ -7,7 +7,7 @@
 
 class Newton : public Iteration {
 public:
-    Newton(const std::function<double (double)> &f, const std::function<double (double)> &fPrime) : Iteration(11), mf(f), mfPrime(fPrime) {}
+    Newton(const std::function<double (double)> &f, const std::function<double (double)> &fPrime) : mf(f), mfPrime(fPrime) {}
 
     double solve(double x) override {
         mNumberOfSteps = 0;

@@ -5,7 +5,7 @@
 
 class Bisection : public Iteration {
 public:
-    explicit Bisection(const std::function<double (double)> &f) : Iteration(34), mf(f) {}
+    explicit Bisection(const std::function<double (double)> &f) : mf(f) {}
 
     double solve(double a, double b) override {
         mNumberOfSteps = 0;
