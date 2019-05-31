@@ -12,6 +12,11 @@ public:
     double solve(double a, double b) override {
         mNumberOfSteps = 0;
 
+        //Algorithm works in range [a,b] if criteria f(a) > f(b) is fulfilled
+        if(mf(a) < mf(b)) {
+            std::swap(a,b);
+        }
+
         fmt::print("Secant -> [{:}, {:}]\n", a, b);
         fmt::print("{:<5}|{:<20}|{:<20}\n", "K", "x", "f(x)");
         fmt::print("-------------------------------------------------- \n");

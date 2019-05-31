@@ -2,6 +2,7 @@
 #define BISECTION_H
 
 #include "iteration.h"
+#include <cassert>
 
 class Bisection : public Iteration {
 public:
@@ -9,6 +10,12 @@ public:
 
     double solve(double a, double b) override {
         mNumberOfSteps = 0;
+
+        //Algorithm works in range [a,b] if criteria f(a)*f(b) < 0 and f(a) > f(b) is fulfilled
+        assert(mf(a)*mf(b) < 0);
+        if(mf(a) < mf(b)) {
+            std::swap(a,b);
+        }
 
         fmt::print("Bisection -> [{:}, {:}]\n", a, b);
         fmt::print("{:<5}|{:<20}|{:<20}|{:<20}|{:<20}\n", "K", "a", "b", "x", "f(x)");

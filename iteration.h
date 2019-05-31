@@ -8,7 +8,7 @@ class Iteration {
 public:
     virtual double solve(double x) { return {}; }
     virtual double solve(double a, double b) { return {}; }
-    virtual double solve(double a, double my, double b) { return {}; }
+    virtual double solve(double a, double x, double b) { return {}; }
 
     int numberOfSteps() const { return mNumberOfSteps; }
 
