@@ -2,6 +2,8 @@
 #define NEWTON_H
 
 #include "iteration.h"
+#include <cassert>
+#include <limits>
 
 class Newton : public Iteration {
 public:
@@ -19,6 +21,8 @@ public:
         fmt::print("{:<5}|{:<20.15f}|{:<20.15f}|{:<20.15f}\n", mNumberOfSteps++, x, fx, fxPrime);
 
         while(fabs(fx) >= EPSILON) {
+            assert(fabs(fxPrime) >= std::numeric_limits<double>::min());
+
             x -= fx/fxPrime;
 
             fx = mf(x);

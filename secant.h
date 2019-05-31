@@ -2,6 +2,8 @@
 #define SECANT_H
 
 #include "iteration.h"
+#include <cassert>
+#include <limits>
 
 class Secant : public Iteration {
 public:
@@ -22,7 +24,11 @@ public:
         fmt::print("{:<5}|{:<20.15f}|{:<20.15f}\n", mNumberOfSteps++, x, fx);
 
         while(fabs(fx) >= EPSILON) {
-            const double x_tmp = x - fx*(x-lastX)/(fx-lastFx);
+            const double functionDifference = fx - lastFx;
+
+            assert(fabs(functionDifference) >= std::numeric_limits<double>::min());
+
+            const double x_tmp = x - fx*(x-lastX)/functionDifference;
             lastFx = fx;
             lastX = x;
             x = x_tmp;
