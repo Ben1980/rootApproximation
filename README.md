@@ -1,6 +1,12 @@
 # Brent's Black-Box Method
 
-...., as discussed on [thoughts-on-cpp.com](https://thoughts-on-cpp.com).
+A collection of root approximation methods, as discussed on [thoughts-on-cpp.com](https://thoughts-on-cpp.com).
+Methods:
+ - [Bisection](https://en.wikipedia.org/wiki/Bisection_method)
+ - [Newton Method](https://en.wikipedia.org/wiki/Newton%27s_method)
+ - [Secant Method](https://en.wikipedia.org/wiki/Secant_method)
+ - [Dekker Method](https://en.wikipedia.org/wiki/Brent's_method#Dekker's_method)
+ - [Brent Method](https://en.wikipedia.org/wiki/Brent%27s_method)
 
 ## Getting Started
 
@@ -8,7 +14,7 @@ To get it up and running you just need to execute:
 - `~\numericalIntegration\build\cmake .. -DCMAKE_TOOLCHAIN_FILE={YOUR_PATH_TO_VCPKG}/scripts/buildsystems/vcpkg.cmake`
 - `~\numericalIntegration\build\cmake --build .`
 
-You can execute the program by `./.....`
+You can execute the program by `./rootApproximation`
 
 ![Screen capture of ......](......gif)
 

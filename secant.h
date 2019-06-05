@@ -7,7 +7,7 @@
 
 class Secant : public Iteration {
 public:
-    explicit Secant(const std::function<double (double)> &f) : mf(f) {}
+    Secant(double epsilon, const std::function<double (double)> &f) : Iteration(epsilon), mf(f) {}
 
     double solve(double a, double b) override {
         mNumberOfSteps = 0;
@@ -28,7 +28,7 @@ public:
 
         fmt::print("{:<5}|{:<20.15f}|{:<20.15f}\n", mNumberOfSteps++, x, fx);
 
-        while(fabs(fx) >= EPSILON) {
+        while(fabs(fx) >= mEpsilon) {
             const double functionDifference = fx - lastFx;
 
             assert(fabs(functionDifference) >= std::numeric_limits<double>::min());

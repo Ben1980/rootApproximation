@@ -7,7 +7,7 @@
 
 class Newton : public Iteration {
 public:
-    Newton(const std::function<double (double)> &f, const std::function<double (double)> &fPrime) : mf(f), mfPrime(fPrime) {}
+    Newton(double epsilon, const std::function<double (double)> &f, const std::function<double (double)> &fPrime) : Iteration(epsilon), mf(f), mfPrime(fPrime) {}
 
     double solve(double x) override {
         mNumberOfSteps = 0;
@@ -20,7 +20,7 @@ public:
         double fxPrime = mfPrime(x);
         fmt::print("{:<5}|{:<20.15f}|{:<20.15f}|{:<20.15f}\n", mNumberOfSteps++, x, fx, fxPrime);
 
-        while(fabs(fx) >= EPSILON) {
+        while(fabs(fx) >= mEpsilon) {
             assert(fabs(fxPrime) >= std::numeric_limits<double>::min());
 
             x -= fx/fxPrime;

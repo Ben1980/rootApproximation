@@ -6,7 +6,7 @@
 
 class Bisection : public Iteration {
 public:
-    explicit Bisection(const std::function<double (double)> &f) : mf(f) {}
+    Bisection(double epsilon, const std::function<double (double)> &f) : Iteration(epsilon), mf(f) {}
 
     double solve(double a, double b) override {
         mNumberOfSteps = 0;
@@ -25,7 +25,7 @@ public:
         double fx = mf(x);
         fmt::print("{:<5}|{:<20.15f}|{:<20.15f}|{:<20.15f}|{:<20.15f}\n", mNumberOfSteps++, a, b, x, fx);
 
-        while(fabs(fx) >= EPSILON) {
+        while(fabs(fx) >= mEpsilon) {
             if(fx >= 0) a = x;
             if(fx < 0) b = x;
 

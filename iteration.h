@@ -8,15 +8,13 @@ class Iteration {
 public:
     virtual double solve(double x) { return {}; }
     virtual double solve(double a, double b) { return {}; }
-    virtual double solve(double a, double x, double b) { return {}; }
 
     int numberOfSteps() const { return mNumberOfSteps; }
 
 protected:
-    Iteration() : mNumberOfSteps(0) {}
+    explicit Iteration(double epsilon) : mEpsilon(epsilon), mNumberOfSteps(0) {}
 
-    constexpr static const double EPSILON = 1e-9;
-
+    const double mEpsilon;
     int mNumberOfSteps;
 };
 
