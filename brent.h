@@ -8,7 +8,7 @@ public:
     Brent(double epsilon, const std::function<double (double)> &f) : Iteration(epsilon), mf(f) {}
 
     double solve(double a, double b) override {
-        mNumberOfSteps = 0;
+        resetNumberOfIterations();
 
         double mfa = mf(a);
         double mfb = mf(b);
@@ -23,7 +23,7 @@ public:
         fmt::print("Brent -> [{:}, {:}]\n", a, b);
         fmt::print("{:<5}|{:<20}|{:<20}|{:<20}|{:<20}|{:<20}\n", "K", "a", "b", "f(a)", "f(b)", "f(s)");
         fmt::print("---------------------------------------------------------------------------------------------------------- \n");
-        fmt::print("{:<5}|{:<20.15f}|{:<20.15f}|{:<20.15f}|{:<20.15f}\n", mNumberOfSteps++, a, b, mfa, mfb, "");
+        fmt::print("{:<5}|{:<20.15f}|{:<20.15f}|{:<20.15f}|{:<20.15f}\n", incrementNumberOfIterations(), a, b, mfa, mfb, "");
 
         double c = a;
         double mfc = mf(c);
@@ -32,7 +32,7 @@ public:
         double s = std::numeric_limits<double>::max();
 
         bool bisection = true;
-        while(fabs(mfb) > mEpsilon && fabs(mfs) > mEpsilon && fabs(b-a) > mEpsilon) {
+        while(fabs(mfb) > epsilon() && fabs(mfs) > epsilon() && fabs(b-a) > epsilon()) {
             if(mfa != mfc && mfb != mfc) {
                 s = a*mfb*mfc/((mfa-mfb)*(mfa-mfc)) +
                     b*mfa*mfc/((mfb-mfa)*(mfb-mfc)) +
@@ -69,7 +69,7 @@ public:
                 std::swap(mfa,mfb);
             }
 
-            fmt::print("{:<5}|{:<20.15f}|{:<20.15f}|{:<20.15f}|{:<20.15f}|{:<20.15f}\n", mNumberOfSteps++, a, b, mfa, mfb, mfs);
+            fmt::print("{:<5}|{:<20.15f}|{:<20.15f}|{:<20.15f}|{:<20.15f}|{:<20.15f}\n", incrementNumberOfIterations(), a, b, mfa, mfb, mfs);
         }
 
         fmt::print("\n");
