@@ -16,7 +16,7 @@ To get it up and running you just need to execute:
 
 You can execute the program by `./rootApproximation`
 
-![Screen capture of ......](......gif)
+![Screen capture of programm execution](rootApproximation.gif)
 
 ### Prerequisites
 

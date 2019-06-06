@@ -12,21 +12,16 @@ public:
     double solve(double a, double b) override {
         mNumberOfSteps = 0;
 
-        //Algorithm works in range [a,b] if criteria f(a) > f(b) is fulfilled
-        if(mf(a) < mf(b)) {
-            std::swap(a,b);
-        }
-
         fmt::print("Secant -> [{:}, {:}]\n", a, b);
-        fmt::print("{:<5}|{:<20}|{:<20}\n", "K", "x", "f(x)");
-        fmt::print("-------------------------------------------------- \n");
+        fmt::print("{:<5}|{:<20}|{:<20}|{:<20}|{:<20}\n", "K", "a", "b", "f(a)", "f(b)");
+        fmt::print("--------------------------------------------------------------------------------------\n");
 
         double x = b;
         double lastX = a;
         double fx = mf(b);
         double lastFx = mf(a);
 
-        fmt::print("{:<5}|{:<20.15f}|{:<20.15f}\n", mNumberOfSteps++, x, fx);
+        fmt::print("{:<5}|{:<20.15f}|{:<20.15f}|{:<20.15f}|{:<20.15f}\n", mNumberOfSteps++, x, lastX, fx, lastFx);
 
         while(fabs(fx) >= mEpsilon) {
             const double functionDifference = fx - lastFx;
@@ -39,7 +34,7 @@ public:
             x = x_tmp;
             fx = mf(x);
 
-            fmt::print("{:<5}|{:<20.15f}|{:<20.15f}\n", mNumberOfSteps++, x, fx);
+            fmt::print("{:<5}|{:<20.15f}|{:<20.15f}|{:<20.15f}|{:<20.15f}\n", mNumberOfSteps++, x, lastX, fx, lastFx);
         }
 
         fmt::print("\n");
