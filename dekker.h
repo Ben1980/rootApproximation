@@ -29,7 +29,7 @@ public:
 
             lastB = b;
 
-            b = isSecantMethodAllowed(b, s, m) ? s : m;
+            b = useSecantMethod(b, s, m) ? s : m;
 
             lastFb = fb;
             fb = mf(b);
@@ -60,7 +60,7 @@ private:
     }
 
     static double calculateSecant(double b, double fb, double lastB, double lastFb) {
-        //No need to check division by 0, in this case the method returns NAN which is taken care by isSecantMethodAllowed method
+        //No need to check division by 0, in this case the method returns NAN which is taken care by useSecantMethod method
         return b-fb*(b-lastB)/(fb-lastFb);
     }
 
@@ -68,7 +68,7 @@ private:
         return 0.5*(a+b);
     }
 
-    static bool isSecantMethodAllowed(double b, double s, double m) {
+    static bool useSecantMethod(double b, double s, double m) {
         //Value s calculated by secant method has to be between m and b
         return (b > m && s > m && s < b) ||
                (b < m && s > b && s < m);

@@ -1,6 +1,6 @@
 reset
 set terminal png medium
-set title "Root Approximation: Secant Method"
+set title "Root Approximation: Newton Method"
 set xrange [-1.5:2.5]
 set yrange [-3:3]
 set xzeroaxis
