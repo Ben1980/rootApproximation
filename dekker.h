@@ -21,9 +21,9 @@ public:
         fmt::print("{:<5}|{:<20.15f}|{:<20.15f}|{:<20.15f}|{:<20.15f}\n", incrementNumberOfIterations(), a, b, fa, fb);
 
         double lastB = a;
-        double lastFb = mf(lastB);
+        double lastFb = fa;
 
-        while(fabs(b-a) > epsilon()) {
+        while(fabs(fb) > epsilon() && fabs(b-a) > epsilon()) {
             const double s = calculateSecant(b, fb, lastB, lastFb);
             const double m = calculateBisection(a, b);
 
