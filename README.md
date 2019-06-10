@@ -1,6 +1,6 @@
 # Brent's Black-Box Method
 
-A collection of root approximation methods, as discussed on [thoughts-on-cpp.com](https://thoughts-on-cpp.com).
+A collection of root approximation methods, as discussed on [thoughts-on-cpp.com](https://thoughts-on-cpp.com/2019/06/06/numerical-methods-with-cpp-part-3-root-approximation-algorithms).
 
 Methods:
  - [Bisection](https://en.wikipedia.org/wiki/Bisection_method)
