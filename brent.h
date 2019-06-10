@@ -20,22 +20,22 @@ public:
         fmt::print("---------------------------------------------------------------------------------------------------------- \n");
         fmt::print("{:<5}|{:<20.15f}|{:<20.15f}|{:<20.15f}|{:<20.15f}\n", incrementNumberOfIterations(), a, b, fa, fb, "");
 
-        double c = a; // b_{k-1}
-        double fc = mf(c);
+        double lastB = a; // b_{k-1}
+        double lastFb = fa;
         double s = std::numeric_limits<double>::max();
         double fs = std::numeric_limits<double>::max();
-        double d; // b_{k-2}
+        double penultimateB = a; // b_{k-2}
 
         bool bisection = true;
         while(fabs(fb) > epsilon() && fabs(fs) > epsilon() && fabs(b-a) > epsilon()) {
-            if(useInverseQuadraticInterpolation(fa, fb, fc)) {
-                s = calculateInverseQuadraticInterpolation(a, b, c, fa, fb, fc);
+            if(useInverseQuadraticInterpolation(fa, fb, lastFb)) {
+                s = calculateInverseQuadraticInterpolation(a, b, lastB, fa, fb, lastFb);
             }
             else {
                 s = calculateSecant(a, b, fa, fb);
             }
 
-            if(useBisection(bisection, a, b, c, d, s)) {
+            if(useBisection(bisection, a, b, lastB, penultimateB, s)) {
                 s = calculateBisection(a, b);
                 bisection = true;
             }
@@ -44,8 +44,8 @@ public:
             }
 
             fs = mf(s);
-            d = c;
-            c = b;
+            penultimateB = lastB;
+            lastB = b;
 
             if(fa*fs < 0) {
                 b = s;
@@ -55,7 +55,7 @@ public:
             }
 
             fa = mf(a);
-            fc = fb;
+            lastFb = fb;
             fb = mf(b);
             checkAndFixAlgorithmCriteria(a, b, fa, fb);
 
@@ -77,10 +77,10 @@ private:
         return b-fb*(b-a)/(fb-fa);
     }
 
-    static double calculateInverseQuadraticInterpolation(double a, double b, double c, double fa, double fb, double fc) {
-        return a*fb*fc/((fa-fb)*(fa-fc)) +
-               b*fa*fc/((fb-fa)*(fb-fc)) +
-               c*fa*fb/((fc-fa)*(fc-fb));
+    static double calculateInverseQuadraticInterpolation(double a, double b, double lastB, double fa, double fb, double lastFb) {
+        return a*fb*lastFb/((fa-fb)*(fa-lastFb)) +
+               b*fa*lastFb/((fb-fa)*(fb-lastFb)) +
+               lastB*fa*fb/((lastFb-fa)*(lastFb-fb));
     }
 
     static bool useInverseQuadraticInterpolation(double fa, double fb, double lastFb) {
@@ -96,9 +96,13 @@ private:
         }
     }
 
-    bool useBisection(bool bisection, double a, double b, double c, double d, double s) const {
-        return (bisection && fabs(s-b) >= 0.5*fabs(b-c)) ||     //Bisection was used in last step but |s-b|>=|b-c|/2 <- Interpolation step would be to rough, so still use bisection
-               (!bisection && fabs(s-b) >= 0.5*fabs(c-d));      //Interpolation was used in last step but |s-b|>=|c-d|/2 <- Interpolation step would be to small
+    bool useBisection(bool bisection, double a, double b, double lastB, double penultimateB, double s) const {
+        static const double DELTA = epsilon() + std::numeric_limits<double>::min();
+
+        return (bisection && fabs(s-b) >= 0.5*fabs(b-lastB)) ||                 //Bisection was used in last step but |s-b|>=|b-lastB|/2 <- Interpolation step would be to rough, so still use bisection
+               (!bisection && fabs(s-b) >= 0.5*fabs(lastB-penultimateB)) ||     //Interpolation was used in last step but |s-b|>=|lastB-penultimateB|/2 <- Interpolation step would be to small
+               (bisection  && fabs(b-lastB) < DELTA) ||                         //If last iteration was using bisection and difference between b and lastB is < delta use bisection for next iteration
+               (!bisection && fabs(lastB-penultimateB) < DELTA);                //If last iteration was using interpolation but difference between lastB ond penultimateB is < delta use biscetion for next iteration
     }
 
     const std::function<double (double)> &mf;
